@@ -5,7 +5,20 @@ Forks current Go process with additional arguments and communicate with its stdi
 
 ### Usage
 
-TODO: Write usage
+Recommended way to use is to activate fork in `init` function:
+```
+var fork gofork.Fork
+
+func init() {
+    fork = gofork.Fork{}
+    if err := fork.Start("--child"); err != nil {
+        panic(err)
+    }
+}
+```
+After fork is spawned it is possible to distinguish whether current code executes in main process or in fork by calling `fork.IsFork()` which returns `true` for forked process and `false` for parent process
+
+Fork structure provides 3 channels `In` for Stdin of forked process, `Out` for Stdout and `Err` for Stderr. Those channels transmit strings as messages between parent and forked process. In parent process you should send messages to `In` and receive from `Out` and `Err`. In forked process you should receive from `In` and send to `Out` and `Err`
 
 ### Example
 TODO: Improve
