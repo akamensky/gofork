@@ -25,7 +25,7 @@ var fork gofork.Fork
 
 func init() {
 	fork = gofork.Fork{}
-	if err := fork.Start("--slave"); err != nil {
+	if err := fork.Start("--child"); err != nil {
 		panic(err)
 	}
 }
